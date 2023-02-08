@@ -3,15 +3,16 @@ Server:
 
 Spring:
   datasource:
-    url: 
-    username:
-    password:
+    url: jdbc:sqlserver://https://customer-kyc.documents.azure.com:443;databaseName=customer-kyc
+    username: kippemoses25@gmail.com
+    password: Jeroline#25
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.diealect.MySQLDialect
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
     show-sql: true
   main:
     web-application-type: servlet
