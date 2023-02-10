@@ -1,27 +1,20 @@
-package com.credable.model;
+package io.credable.data.model;
 
 import org.hibernate.annotations.Table;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
 
 @Entity
-@Table(appliesTo = "customer-kyc")
+@Table(appliesTo="kyc")
 public class Subscribe {
 
     @Id
-    @SequenceGenerator(
-        name = "student_sequence",
-        sequenceName = "student_sequence",
-        allocationSize = 1)
-    @GeneratedValue(
-        strategy = GenerationType.SEQUENCE,
-        generator = "student_sequence"   
-    )
-    
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="customer_id") 
     private Integer customer_id;
 
     public Subscribe(Integer customer_id) {
@@ -29,6 +22,7 @@ public class Subscribe {
     }
 
     public Subscribe() {
+        
     }
 
     public Integer getCustomer_id() {
@@ -43,6 +37,4 @@ public class Subscribe {
     public String toString() {
         return "Subscribe [customer_id=" + customer_id + "]";
     } 
-      
-
 }
