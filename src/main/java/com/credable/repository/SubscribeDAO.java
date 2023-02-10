@@ -1,8 +1,10 @@
 package com.credable.repository;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface SubscribeDAO {
+import com.credable.model.Subscribe;
+
+public interface SubscribeDAO extends JpaRepository<Subscribe, Long>{
     
 }
+
