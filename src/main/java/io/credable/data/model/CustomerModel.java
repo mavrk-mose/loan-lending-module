@@ -24,6 +24,7 @@ public class CustomerModel {
         strategy = GenerationType.SEQUENCE,
         generator = "customer_id_sequence"
         )
+    private Integer Id;
     private String customerNumber;
     private Date createdAt;
     private Date createdDate;
@@ -41,6 +42,13 @@ public class CustomerModel {
     private Integer status;
 
     //getters and setters
+    public Integer getId() {
+        return Id;
+    }
+
+    public void setId(Integer id) {
+        Id = id;
+    }
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -161,8 +169,14 @@ public class CustomerModel {
         this.updatedAt = updatedAt;
     }
 
+    public CustomerModel() {
+        
+    }
+
     //model constructors
-    public CustomerModel(Date createdAt, 
+    public CustomerModel(
+                    Integer id,
+                    Date createdAt, 
                     Date createdDate, 
                     String customerNumber, 
                     Date dob, 
@@ -177,6 +191,7 @@ public class CustomerModel {
                     Double monthlyIncome, 
                     Integer status,
                     Date updatedAt) {
+        this.Id = id;
         this.createdAt = createdAt;
         this.createdDate = createdDate;
         this.customerNumber = customerNumber;

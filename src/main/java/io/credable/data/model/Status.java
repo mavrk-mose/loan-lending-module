@@ -1,17 +1,17 @@
 package io.credable.data.model;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Id;
 
 @Entity
-@Table(name="customer-number")
-public class Subscribe {
-
-    //subscribe model
+@Table(name = "loan-status")
+public class Status {
+    
+    //status model
     @Id
     @SequenceGenerator(
         name = "customer_id_sequence",
@@ -23,33 +23,33 @@ public class Subscribe {
         generator = "customer_id_sequence"
         )
     private Integer Id;
-    private String customer_number;
+    private String Status;
 
     //constructors
-    public Subscribe(String customer_number) {
-        this.customer_number = customer_number;
+    public Status(Integer id) {
+        Id = id;
     }
-    public Subscribe(Integer id) {
-        this.Id = id;
+    public Status(String status) {
+        Status = status;
     }
-
-    public Subscribe() {
+    public Status() {
+        
     }
 
     //getters and setters
-    public String getCustomerNumber() {
-        return customer_number;
-    }
-
-    public void setCustomerNumber(String customer_number) {
-        this.customer_number = customer_number;
-    }
     public Integer getId() {
         return Id;
     }
-
     public void setId(Integer id) {
         Id = id;
     }
- 
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
+    }
+
 }

@@ -24,7 +24,7 @@ public class SubscribeController {
     @PostMapping("subscribe")
     public void subscribeCustomer (@RequestBody NewSubscription subscription) {
         Subscribe subscribe = new Subscribe();
-        subscribe.setCustomerNumber(subscription.customer_number);;
+        subscribe.setCustomerNumber(subscription.customer_number);
         subscribeDAO.save(subscribe);
     }
     

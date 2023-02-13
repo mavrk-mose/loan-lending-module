@@ -8,10 +8,10 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="customer-number")
-public class Subscribe {
+@Table(name = "loan-requests")
+public class Loan {
 
-    //subscribe model
+    //loan request model
     @Id
     @SequenceGenerator(
         name = "customer_id_sequence",
@@ -24,19 +24,29 @@ public class Subscribe {
         )
     private Integer Id;
     private String customer_number;
+    private Integer amount;
 
     //constructors
-    public Subscribe(String customer_number) {
-        this.customer_number = customer_number;
-    }
-    public Subscribe(Integer id) {
+    public Loan(Integer id, 
+                String customer_number, 
+                Integer amount) {
         this.Id = id;
+        this.customer_number = customer_number;
+        this.amount = amount;
     }
 
-    public Subscribe() {
+    public Loan() {
     }
 
     //getters and setters
+    public Integer getId() {
+        return Id;
+    }
+
+    public void setId(Integer id) {
+        this.Id = id;
+    }
+
     public String getCustomerNumber() {
         return customer_number;
     }
@@ -44,12 +54,13 @@ public class Subscribe {
     public void setCustomerNumber(String customer_number) {
         this.customer_number = customer_number;
     }
-    public Integer getId() {
-        return Id;
+
+    public Integer getAmount() {
+        return amount;
     }
 
-    public void setId(Integer id) {
-        Id = id;
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
- 
+
 }

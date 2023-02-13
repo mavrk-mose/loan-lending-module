@@ -17,8 +17,9 @@ public class CustomerController {
         this.subscribeDAO = subscribeDAO;
     }
 
-    @GetMapping("getNumber")
-    public List<Subscribe> getCustomerNumber () {
+    //TODO: this needs to fetch data using a SOAP request 
+    @GetMapping("customer-kyc")
+    public List<Subscribe> getCustomerKYC () {
         return subscribeDAO.findAll();
     }
 }
