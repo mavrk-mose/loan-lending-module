@@ -4,24 +4,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import io.credable.data.model.*;
-//import com.credable.repository.SubscribeDAO;
+import io.credable.data.model.Subscribe;
 
 @Service
 public class SubscribeService {
 
-    /* private final SubscribeDAO subscribeDAO;
-    
-    public SubscribeService(SubscribeDAO subscribeDAO) {
-        this.subscribeDAO = subscribeDAO;
-    } */
-
-    public List<Subscribe> getCustomers() {
+    public List<Subscribe> subscribeCustomer() {
         return List.of(
-                new Subscribe(
-                    234774784
-                )
+            new Subscribe()
         );  
-        /* return subscribeDAO.findAll(); */  
     }
 }

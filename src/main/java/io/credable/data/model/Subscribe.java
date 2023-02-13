@@ -1,40 +1,56 @@
 package io.credable.data.model;
 
-import org.hibernate.annotations.Table;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(appliesTo="kyc")
+@Table(name="customer-number")
 public class Subscribe {
 
+    //subscribe model
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="customer_id") 
-    private Integer customer_id;
+    @SequenceGenerator(
+        name = "customer_id_sequence",
+        sequenceName = "customer_id_sequence",
+        allocationSize = 1
+    )
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "customer_id_sequence"
+        )
+    private Integer Id;
+    private String customer_number;
 
-    public Subscribe(Integer customer_id) {
-        this.customer_id = customer_id;
+    //constructors
+    public Subscribe(String customer_number) {
+        this.customer_number = customer_number;
+    }
+    public Subscribe(Integer id) {
+        this.Id = id;
     }
 
     public Subscribe() {
         
     }
 
-    public Integer getCustomer_id() {
-        return customer_id;
+    //getters and setters
+    public String getCustomerNumber() {
+        return customer_number;
     }
 
-    public void setCustomer_id(Integer customer_id) {
-        this.customer_id = customer_id;
+    public void setCustomerNumber(String customer_number) {
+        this.customer_number = customer_number;
+    }
+    public Integer getId() {
+        return Id;
     }
 
-    @Override
-    public String toString() {
-        return "Subscribe [customer_id=" + customer_id + "]";
-    } 
+    public void setId(Integer id) {
+        Id = id;
+    }
+ 
 }
