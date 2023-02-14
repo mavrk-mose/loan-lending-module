@@ -1,20 +1,28 @@
 package io.credable.services;
 
+//import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerService {
 
-    //TODO: get customer_number from SubscribeModel with getter method
+    //make soapservice
+    public String soapRequest(String customer_number){
+        
+        //TODO: inject the customerconfig 
 
-    //TODO: invoke a SOAP web service to fetch data of that customer_number
+        //TODO: invoke request method to get data
+
+        //TODO: access response data then return it as List.of()
+
+        return customer_number;
+    }
 
     //TODO: write exception handling in case data for that user is not present
 
-    //TODO: parse XML response from SOAP to JSON
+    //TODO: persist response data to KYC database, by saving to repository
 
-    //TODO: persist the JSON response to KYC database
-
-    //TODO: print out subsdcribed successfully
+    //TODO: print out subscribed successfully, otherwise print out sign in
 
 }

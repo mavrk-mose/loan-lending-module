@@ -8,7 +8,8 @@ public class ScoreService {
 
     //TODO: queryScore needs to have a Time Interval to retry
 
-    //TODO: while query score is running user must not be able to query for score
+    //TODO: while query score is running user must not be able to query for score, 
+    //TODO: I should dispatch a listener class in get score to check if query is successful
 
     //TODO: if queryScore is successful trigger getScore service
 

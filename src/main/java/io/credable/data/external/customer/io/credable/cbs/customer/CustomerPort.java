@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
     ObjectFactory.class
 })
 public interface CustomerPort {
-
+//this is the binding provider
 
     /**
      * 

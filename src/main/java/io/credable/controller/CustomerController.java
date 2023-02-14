@@ -1,25 +1,11 @@
 package io.credable.controller;
 
-import java.util.List;
-
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import io.credable.data.model.Subscribe;
-import io.credable.data.repository.SubscribeDAO;
 
 @RestController
 public class CustomerController {
-    
-    private final SubscribeDAO subscribeDAO;
 
-    public CustomerController(SubscribeDAO subscribeDAO) {
-        this.subscribeDAO = subscribeDAO;
-    }
+    //TODO: this needs to fetch customer data using a SOAP request
 
-    //TODO: this needs to fetch data using a SOAP request 
-    @GetMapping("customer-kyc")
-    public List<Subscribe> getCustomerKYC () {
-        return subscribeDAO.findAll();
-    }
+    //TODO: process the response payload
 }
