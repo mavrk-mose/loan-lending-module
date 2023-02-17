@@ -1,28 +1,24 @@
 package io.credable.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.credable.services.CustomerService;
+import io.credable.config.CustomerConfig;
+import io.credable.data.external.customer.CustomerResponse;
+import io.credable.services.CustomerClient;
 
 @RestController
 public class SubscribeController {
 
-    @Autowired
-    private CustomerService customerService;
-
-    //SOAP request is invoked when number is submitted inside Post mapping method
+    //SOAP request is invoked when number is submitted inside Post mapping 
     @PostMapping("subscribe")
-    public List<String> subscribeCustomer (@RequestBody String customer_number) {
-
-        //inject a soapService to make a SOAP request
-        String response = customerService.soapRequest(customer_number);
-        return List.of(response);
-
+    public CustomerResponse subscribeCustomer (@RequestBody String customer_number) {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(CustomerConfig.class);
+        CustomerClient client = context.getBean(CustomerClient.class);
+        CustomerResponse response = client.getCustomer(customer_number);
+        return response;
     }
     
 }

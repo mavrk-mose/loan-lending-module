@@ -1,11 +1,13 @@
 
-package io.credable.data.external.customer.io.credable.cbs.customer;
+package io.credable.data.external.customer;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
+
 
 
 /**
@@ -64,27 +66,58 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class Customer {
 
     @XmlSchemaType(name = "dateTime")
+    @XmlElement(name = "createdAt", namespace = "http://credable.io/cbs/customer")
     protected XMLGregorianCalendar createdAt;
+
     @XmlSchemaType(name = "dateTime")
+    @XmlElement(name = "createdDate", namespace = "http://credable.io/cbs/customer")
     protected XMLGregorianCalendar createdDate;
+
+    @XmlElement(name = "customerNumber", namespace = "http://credable.io/cbs/customer")
     protected String customerNumber;
+
     @XmlSchemaType(name = "dateTime")
+    @XmlElement(name = "dob", namespace = "http://credable.io/cbs/customer")
     protected XMLGregorianCalendar dob;
+
+    @XmlElement(name = "email", namespace = "http://credable.io/cbs/customer")
     protected String email;
+
+    @XmlElement(name = "firstName", namespace ="http://credable.io/cbs/customer")
     protected String firstName;
+
     @XmlSchemaType(name = "string")
+    @XmlElement(name = "gender", namespace = "http://credable.io/cbs/customer")
     protected Gender gender;
+
+    @XmlElement(name = "id", namespace = "http://credable.io/cbs/customer")
     protected Long id;
+
+    @XmlElement(name = "idNumber", namespace = "http://credable.io/cbs/customer")
     protected String idNumber;
+
     @XmlSchemaType(name = "string")
+    @XmlElement(name = "idType", namespace = "http://credable.io/cbs/customer")
     protected IdType idType;
+    
+    @XmlElement(name = "lastName", namespace = "http://credable.io/cbs/customer")
     protected String lastName;
+
+    @XmlElement(name = "middleName", namespace = "http://credable.io/cbs/customer")
     protected String middleName;
+
+    @XmlElement(name = "mobile", namespace = "http://credable.io/cbs/customer")
     protected String mobile;
+
+    @XmlElement(name = "monthlyIncome", namespace = "http://credable.io/cbs/customer")
     protected double monthlyIncome;
+
     @XmlSchemaType(name = "string")
+    @XmlElement(name = "status", namespace = "http://credable.io/cbs/customer")
     protected Status status;
+
     @XmlSchemaType(name = "dateTime")
+    @XmlElement(name = "updatedAt", namespace = "http://credable.io/cbs/customer")
     protected XMLGregorianCalendar updatedAt;
 
     /**

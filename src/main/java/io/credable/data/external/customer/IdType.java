@@ -1,5 +1,5 @@
 
-package io.credable.data.external.customer.io.credable.cbs.customer;
+package io.credable.data.external.customer;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;

@@ -1,5 +1,5 @@
 
-package io.credable.data.external.customer.io.credable.cbs.customer;
+package io.credable.data.external.customer;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="customer" type="{http://credable.io/cbs/customer}customer"/>
+ *         &lt;element name="customerNumber" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,36 +29,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "customer"
+    "customerNumber"
 })
-@XmlRootElement(name = "CustomerResponse")
-public class CustomerResponse {
+@XmlRootElement(name = "CustomerRequest")
+public class CustomerRequest {
 
     @XmlElement(required = true)
-    protected Customer customer;
+    protected String customerNumber;
 
     /**
-     * Gets the value of the customer property.
+     * Gets the value of the customerNumber property.
      * 
      * @return
      *     possible object is
-     *     {@link Customer }
+     *     {@link String }
      *     
      */
-    public Customer getCustomer() {
-        return customer;
+    public String getCustomerNumber() {
+        return customerNumber;
     }
 
     /**
-     * Sets the value of the customer property.
+     * Sets the value of the customerNumber property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Customer }
+     *     {@link String }
      *     
      */
-    public void setCustomer(Customer value) {
-        this.customer = value;
+    public void setCustomerNumber(String value) {
+        this.customerNumber = value;
     }
 
 }

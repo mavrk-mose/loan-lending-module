@@ -1,5 +1,5 @@
 
-package io.credable.data.external.customer.io.credable.cbs.customer;
+package io.credable.data.external.customer;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

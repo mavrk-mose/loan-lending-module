@@ -1,5 +1,5 @@
 
-package io.credable.data.external.customer.io.credable.cbs.customer;
+package io.credable.data.external.customer;
 
 import java.net.MalformedURLException;
 import java.net.URL;
