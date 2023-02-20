@@ -1,5 +1,7 @@
 package io.credable.config;
 
+import javax.xml.bind.JAXBException;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -24,9 +26,10 @@ public class CustomerConfig {
     }
 
     @Bean
-    Jaxb2Marshaller marshaller() {
+    Jaxb2Marshaller marshaller() throws JAXBException {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
         marshaller.setContextPath("io.credable.data.external.customer");
+        //JAXBContext context = JAXBContext.newInstance(CustomerRequest.class);
         return marshaller;
     }
 
@@ -44,5 +47,4 @@ public class CustomerConfig {
 
     }
 
-    
 }

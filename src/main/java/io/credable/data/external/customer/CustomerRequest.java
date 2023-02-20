@@ -28,13 +28,11 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "customerNumber"
-})
-@XmlRootElement(name = "CustomerRequest")
+@XmlType(name = "", propOrder = {"customerNumber"})
+@XmlRootElement(namespace = "http://credable.io/cbs/customer", name = "CustomerRequest")
 public class CustomerRequest {
 
-    @XmlElement(required = true)
+    @XmlElement(namespace = "http://credable.io/cbs/customer", required = true)
     protected String customerNumber;
 
     /**
