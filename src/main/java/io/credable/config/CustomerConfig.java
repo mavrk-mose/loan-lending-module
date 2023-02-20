@@ -1,7 +1,6 @@
 package io.credable.config;
 
-import javax.xml.bind.JAXBException;
-
+import jakarta.xml.bind.JAXBException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -29,14 +28,11 @@ public class CustomerConfig {
     Jaxb2Marshaller marshaller() throws JAXBException {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
         marshaller.setContextPath("io.credable.data.external.customer");
-        //JAXBContext context = JAXBContext.newInstance(CustomerRequest.class);
         return marshaller;
     }
 
-
     @Bean
     CustomerClient CustomerClient(Jaxb2Marshaller marshaller) {
-
         CustomerClient customerClient = new CustomerClient();
         customerClient.setDefaultUri("https://kycapitest.credable.io/service/customer");
         customerClient.setMarshaller(marshaller);
@@ -44,7 +40,6 @@ public class CustomerConfig {
         ClientInterceptor[] interceptor = new ClientInterceptor[]{securityInterceptor(), new SoapInterceptor("")};
         customerClient.setInterceptors(interceptor);
         return customerClient;
-
     }
 
 }
