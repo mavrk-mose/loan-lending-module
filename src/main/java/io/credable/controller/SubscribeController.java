@@ -16,11 +16,13 @@ public class SubscribeController {
     
     //SOAP request is invoked when number is submitted inside Post mapping 
     @GetMapping("subscribe/{customer_number}")
-    public CustomerResponse subscribeCustomer (@PathVariable String customer_number) throws JAXBException {
+    public CustomerResponse getCustomer (@PathVariable String customer_number) throws JAXBException {
+        //returns response in the shape of CustomerResponse
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(CustomerConfig.class);
         CustomerClient client = context.getBean(CustomerClient.class);
         CustomerResponse response = client.getCustomer(customer_number);
         return response;
-    }
+    }   
+    
     
 }

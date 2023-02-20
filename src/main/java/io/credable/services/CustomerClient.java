@@ -8,7 +8,6 @@ import io.credable.data.external.customer.CustomerResponse;
 public class CustomerClient extends WebServiceGatewaySupport {
 
     public CustomerResponse getCustomer(String customer_number){
-        
         CustomerRequest request = new CustomerRequest();
         request.setCustomerNumber(customer_number);
 
