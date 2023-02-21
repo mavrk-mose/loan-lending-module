@@ -1,55 +1,38 @@
 package io.credable.services;
 
-// import java.util.Map;
-
-// import javax.xml.ws.soap.SOAPFaultException;
-
-// import org.springframework.http.HttpStatus;
-// import org.springframework.http.ResponseEntity;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-// import io.credable.data.repository.CustomerDAO;
-// import io.credable.data.external.customer.CustomerResponse;
+import io.credable.data.external.customer.Customer;
+import io.credable.data.external.customer.CustomerResponse;
+import io.credable.data.model.CustomerModel;
+import io.credable.data.repository.CustomerDAO;
+
+//TODO: how do I invoke this service inside the controller?
 @Service
 public class CustomerService {
+    private final CustomerDAO customerDAO;
+    private final CustomerResponse response;
+
+    public CustomerService(CustomerDAO customerDAO,
+                           CustomerResponse response) {
+        this.customerDAO = customerDAO;
+        this.response = response;
+    }
+
+    //gets the customer number from the database
+    public CustomerModel grabCustomer(String customer_number) {
+        return customerDAO.findCustomerNumber(customer_number);
+    }
+
+    //map response to entity, then stores it to repo
+    public CustomerModel storeCustomer (CustomerResponse response) {
+        Customer customer = response.getCustomer();
+        CustomerModel customerResponse = null;
+        //if customer response is not null, map it to customer model
+        ModelMapper modelMapper = new ModelMapper();
+        customerResponse = modelMapper.map(customer, CustomerModel.class);
+        return customerDAO.save(customerResponse);
+    }
     
-    // //persist response data to KYC database, by mapping to customer entity
-    // public ResponseEntity<Object> SubscribeCustomer(String customer_number, Object newCustomerResponse) {
-
-    //     CustomerResponse response = new CustomerResponse();
-    //     CustomerClient customerClient = new CustomerClient();
-    //     CustomerDAO existingCustomer = (CustomerDAO) response.getCustomer(customer_number);
-
-    //     if (existingCustomer!=null) {
-    //         //if customer number is found in database respond with
-    //         return 
-    //             new ResponseEntity<>(Map.of("message", 
-    //                                         "customer already subscribed", 
-    //                                         "response", existingCustomer), HttpStatus.OK);
-    //     } else {
-    //         try {
-    //             //if customer not found in database, invoke SOAP request
-    //             CustomerResponse newCustomer = customerClient.getCustomer(customer_number);
-
-    //             if (newCustomer != null && newCustomer.getCustomer() != null) {
-    //                 //if number is found in Core CBS, save to local database
-    //                // CustomerResponse newCustomerData = customerDAO.save(newCustomerData, customer_number);
-    //                 return 
-    //                     new ResponseEntity<>(Map.of(
-    //                                                 ), HttpStatus.OK);
-    //             }else{
-    //                 return 
-    //                     new ResponseEntity<>("Customer is not subscribed",HttpStatus.NOT_FOUND);  
-    //             }
-    //         }
-    //         catch (SOAPFaultException ex) {
-    //             // meant to handle the SOAP request exception
-    //                 return 
-    //                     new ResponseEntity<>("Error retrieving customer data" 
-    //                                         +ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);       
-    //         }
-    //     }
-    // }
-
-    //TODO: print out subscribed successfully, otherwise print out sign in
 }

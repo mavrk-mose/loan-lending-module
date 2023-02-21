@@ -14,7 +14,6 @@ public class CustomerClient extends WebServiceGatewaySupport {
         CustomerResponse response = (CustomerResponse) getWebServiceTemplate()
             .marshalSendAndReceive("https://kycapitest.credable.io/service/customer", request);
 
-        return response;
+        return response;    
     }
-
 }
