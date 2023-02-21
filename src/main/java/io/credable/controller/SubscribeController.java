@@ -1,5 +1,6 @@
 package io.credable.controller;
 
+//import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBException;
@@ -16,51 +17,50 @@ import io.credable.data.external.customer.CustomerResponse;
 import io.credable.data.model.CustomerModel;
 import io.credable.services.CustomerClient;
 import io.credable.services.CustomerService;
+import jakarta.xml.ws.soap.SOAPFaultException;
 
 @RestController
 public class SubscribeController {  
     //initialized
     private final CustomerService service;
-    private final CustomerClient client;
-
-    public SubscribeController(CustomerService service, 
-                               CustomerClient client) {
+    public SubscribeController(CustomerService service) {
         this.service = service;
-        this.client = client;
     }
 
     //SOAP request is invoked when number is submitted inside Post mapping 
     @GetMapping("subscribe/{customer_number}")
     public ResponseEntity<Object> getCustomer (@PathVariable String customer_number) throws JAXBException {
-        CustomerModel existingCustomer = service.grabCustomer(customer_number);
-        if (existingCustomer != null) {
-            return 
-                new ResponseEntity<>(Map.of("message", "already subscribed", 
-                                            "response", existingCustomer), HttpStatus.OK);
-        } else {
+        //customer data is in KYC database 
+        // List<CustomerModel> existingCustomer = service.grabCustomer(customer_number);
+        // if (existingCustomer != null) {
+        //     return 
+        //         new ResponseEntity<>(Map.of("message", "already subscribed", 
+        //                                     "response", existingCustomer), HttpStatus.OK);
+        // } 
+        // //fetch data for new customer then store it on the database
+        // else {
             try {
+                //returns response in the shape of CustomerResponse
+                AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(CustomerConfig.class);
+                CustomerClient client = context.getBean(CustomerClient.class);
                 CustomerResponse response = client.getCustomer(customer_number);
                 if (response != null && response.getCustomer() != null) {
                     CustomerModel newCustomer = service.storeCustomer(response);
+                    return 
+                        new ResponseEntity<>(Map.of("Message", "Successfully subscribed", 
+                                                    "response", newCustomer), HttpStatus.OK);
                 } else {
-                    
+                    return 
+                        new ResponseEntity<>("Customer Number doesn't exist", HttpStatus.NOT_FOUND);
                 }
-            } catch (Exception e) {
-                // TODO: handle exception
+            } catch (SOAPFaultException e) {
+                //handle exception
+                return 
+                    new ResponseEntity<>("Error retrieving customer data: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }
-        return null;
-        
-     
+        //}        
     } 
 }     
-// CustomerModel fetch = null;
-        // //returns response in the shape of CustomerResponse
-        // AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(CustomerConfig.class);
-        // CustomerClient client = context.getBean(CustomerClient.class);
-        // CustomerResponse response = client.getCustomer(customer_number);
-        // CustomerService request = new CustomerService();
-        // fetch = request.subscribeCustomer(response, customer_number);
-        // return fetch;
+       
         
-    
+        

@@ -1,6 +1,9 @@
 package io.credable.services;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.credable.data.external.customer.Customer;
@@ -8,21 +11,18 @@ import io.credable.data.external.customer.CustomerResponse;
 import io.credable.data.model.CustomerModel;
 import io.credable.data.repository.CustomerDAO;
 
-//TODO: how do I invoke this service inside the controller?
 @Service
 public class CustomerService {
+    @Autowired
     private final CustomerDAO customerDAO;
-    private final CustomerResponse response;
 
-    public CustomerService(CustomerDAO customerDAO,
-                           CustomerResponse response) {
+    public CustomerService(CustomerDAO customerDAO) {
         this.customerDAO = customerDAO;
-        this.response = response;
     }
 
     //gets the customer number from the database
-    public CustomerModel grabCustomer(String customer_number) {
-        return customerDAO.findCustomerNumber(customer_number);
+    public List<CustomerModel> grabCustomer(String customer_number) {
+        return customerDAO.findByCustomerNumber(customer_number);
     }
 
     //map response to entity, then stores it to repo
@@ -33,6 +33,5 @@ public class CustomerService {
         ModelMapper modelMapper = new ModelMapper();
         customerResponse = modelMapper.map(customer, CustomerModel.class);
         return customerDAO.save(customerResponse);
-    }
-    
+    }   
 }
