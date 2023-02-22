@@ -5,16 +5,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.credable.data.model.Loan;
-import io.credable.data.repository.LoanDAO;
 
 @RestController
 public class LoanController {
-    
-    private final LoanDAO loanDAO;
-
-    public LoanController(LoanDAO loanDAO) {
-        this.loanDAO = loanDAO;
-    }
 
     record NewRequest(
         String customer_number,
@@ -27,7 +20,6 @@ public class LoanController {
         Loan loan = new Loan();
         loan.setCustomerNumber(request.customer_number);
         loan.setAmount(request.amount);
-        loanDAO.save(loan);
     }
 
 }
