@@ -36,6 +36,7 @@ public class SubscribeController {
             AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(CustomerConfig.class);
             CustomerClient client = context.getBean(CustomerClient.class);
             CustomerResponse response = client.getCustomer(customer_number);
+            
             if (response != null && response.getCustomer() != null) {
                 CustomerModel newCustomer = service.storeCustomer(response);
                 return 
