@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.soap.security.wss4j2.Wss4jSecurityInterceptor;
+import org.springframework.web.client.RestTemplate;
 
 import io.credable.services.CustomerClient;
 
@@ -40,6 +41,11 @@ public class CustomerConfig {
         ClientInterceptor[] interceptor = new ClientInterceptor[]{securityInterceptor(), new SoapInterceptor("")};
         customerClient.setInterceptors(interceptor);
         return customerClient;
+    }
+
+    @Bean
+    public RestTemplate getRestTemplate () {
+        return new RestTemplate();
     }
 
 }

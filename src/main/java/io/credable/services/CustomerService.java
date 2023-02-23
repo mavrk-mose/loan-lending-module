@@ -1,6 +1,6 @@
 package io.credable.services;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class CustomerService {
     }
 
     //gets the customer number from the database
-    public List<CustomerModel> grabCustomer(String customer_number) {
+    public Optional<CustomerModel> grabCustomer(String customer_number) {
         return customerDAO.findByCustomerNumber(customer_number);
     }
 

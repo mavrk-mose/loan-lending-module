@@ -27,11 +27,6 @@ public class LoanController {
         this.client = client;
     }
 
-    record ClientBody (String url, 
-                       String name, 
-                       String username, 
-                       String password) {
-    }
 
     // @GetMapping("request-loan")
     // public ResponseEntity<Object> requestLoan (@RequestBody NewRequest request) {
