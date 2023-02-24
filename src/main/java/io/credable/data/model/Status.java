@@ -1,23 +1,10 @@
 package io.credable.data.model;
 
-public class Status {
-    private String Status;
+public enum Status {
+    PENDING,
 
-    //constructors
-    public Status(String status) {
-        Status = status;
-    }
-    public Status() {
-        
-    }
+    SUCCESSFUL,
 
-    //getters and setters
-    public String getStatus() {
-        return Status;
-    }
-
-    public void setStatus(String status) {
-        Status = status;
-    }
+    REJECTED;
 
 }
