@@ -9,6 +9,7 @@ public class QueryResponse {
     private Long limitAmount;
     private String exclusion;
     private String exclusionReason;
+    private String errorMessage;
     
     //getters and setters 
     public Integer getId() {
@@ -59,19 +60,29 @@ public class QueryResponse {
         this.exclusionReason = exclusionReason;
     }
 
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
     //constructors
     public QueryResponse(Integer id, 
                          String customer_number, 
                          Integer score, 
                          Long limitAmount, 
                          String exclusion,
-                         String exclusionReason) {
+                         String exclusionReason,
+                         String errorMessage) {
         this.id = id;
         this.customer_number = customer_number;
         Score = score;
         this.limitAmount = limitAmount;
         this.exclusion = exclusion;
         this.exclusionReason = exclusionReason;
+        this.errorMessage = errorMessage;
     }
     
 }
