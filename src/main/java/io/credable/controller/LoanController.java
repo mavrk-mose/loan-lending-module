@@ -23,12 +23,12 @@ public class LoanController {
     }
 
 
-    @PostMapping("request-loan")
-    public ResponseEntity<Object> requestLoan() throws JsonProcessingException {
-        //TODO: this should have two parameters one of customer number and for token each are required for different methods
-        String score = client.createClient();
-         return ResponseEntity.ok(score);
-    }
+    // @PostMapping("request-loan")
+    // public ResponseEntity<Object> requestLoan() {
+    //     //TODO: this should have two parameters one of customer number and for token each are required for different methods
+    //     // String score = client.createClient();
+    //      return ResponseEntity.ok);
+    // }
     
     
 
