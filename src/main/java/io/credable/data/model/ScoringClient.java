@@ -34,8 +34,22 @@ public class ScoringClient {
 
     private String customerNumber;
 
+    public String getClientToken() throws JsonProcessingException {
+        if (this.clientToken == null) {
+            createClient();
+        }
+        return this.clientToken;
+    }
+
+    public String getToken() throws JsonProcessingException {
+        if (this.token == null) {
+            initiateQueryScore(customerNumber);
+        }
+        return this.token;
+    }
+
     //POST request to generate client-token
-    public ResponseEntity<?> createClient () throws JsonProcessingException{
+    private ResponseEntity<?> createClient () throws JsonProcessingException{
         //request payload
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("url","localhost:8080/transactions");
@@ -54,15 +68,13 @@ public class ScoringClient {
             URI uri = URI.create("https://scoringtest.credable.io/api/v1/client/createClient");    
             ResponseEntity<ClientResponse> responseEntity = restTemplate.exchange(uri, HttpMethod.POST, requestEntity, ClientResponse.class);
             //extract value of client-token
-            if (responseEntity != null) {
-                ModelMapper modelMapper = new ModelMapper();
-                ClientResponse response = modelMapper.map(responseEntity.getBody(), ClientResponse.class);
-                String token = response.getToken();
+            if (responseEntity != null && responseEntity.getBody() != null) {
+                String token = responseEntity.getBody().getToken();
                 this.clientToken = token; //makes the client-token as a global variable
-                   return ResponseEntity.ok(this.clientToken);
+                return ResponseEntity.ok(this.clientToken);
             } else {
                 LOGGER.warning("The response is empty");
-                   return ResponseEntity.badRequest().build();
+                return ResponseEntity.ok("response failed to generate");
             }  
         } catch (RestClientException e) {
             LOGGER.warning(e.getMessage());
@@ -71,35 +83,30 @@ public class ScoringClient {
     }
     
     //initialize the query score
-    private void initiateQueryScore (String customerNumber) throws JsonProcessingException {
+    public ResponseEntity<?> initiateQueryScore (String customerNumber) throws JsonProcessingException {
         //if client-token is not null, use client-token as header
-       if (this.clientToken != null) {
             try {
                 //create a GET request with client-token as header
-                URI uri = URI.create("https://scoringtest.credable.io/ap1/v1/scoring/initiateQueryScore/{customerNumber}");
+                URI uri = URI.create("https://scoringtest.credable.io/ap1/v1/scoring/initiateQueryScore/" + customerNumber);
                 HttpHeaders headers = new HttpHeaders();
-                headers.set("client-token", this.clientToken);
+                headers.set("client-token", getClientToken());
                 headers.setContentType(MediaType.APPLICATION_JSON); 
                 HttpEntity<String> entity = new HttpEntity<>(headers);
                 ResponseEntity<Token> response = restTemplate.exchange(uri, HttpMethod.GET, entity, Token.class);
 
                 //extract token value 
-                if (response != null) {
-                    Token responseToken = null;
-                    ModelMapper modelMapper = new ModelMapper();
-                    responseToken = modelMapper.map(response, Token.class);
-                    String newToken = responseToken.getToken();
+                if (response != null && response.getBody() != null) {
+                    String newToken = response.getBody().getToken();
                     this.token = newToken;
+                    return ResponseEntity.ok(this.token);
                 } else {
                     LOGGER.warning("token failed to generate");
+                    return ResponseEntity.badRequest().build();
                 }
             } catch (RestClientException e) {
                 LOGGER.warning(e.getMessage());
-            }
-        } else { 
-        //otherwise trigger createClient() to create client-token
-         createClient();
-       }     
+                throw new RuntimeException("failed to send GET request");
+            }   
     }
 
     //query the score
