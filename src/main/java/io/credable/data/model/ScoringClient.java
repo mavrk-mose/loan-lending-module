@@ -3,7 +3,6 @@ package io.credable.data.model;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.modelmapper.ModelMapper;
@@ -93,7 +92,7 @@ public class ScoringClient {
 
     //initialize the query score
     @SneakyThrows
-    public ResponseEntity<?> initiateQueryScore (String customerNumber) {
+    private ResponseEntity<String> initiateQueryScore (String customerNumber) {
         //if client-token is not null, use client-token as header
         try {
             //create a GET request with client-token as header
@@ -112,34 +111,32 @@ public class ScoringClient {
     }
 
     //query the score
-    public QueryResponse queryScore (String token) throws JsonProcessingException {
+    @SneakyThrows
+    public QueryResponse queryScore (String customerNumber) {
         //if token & client-token are not null trigger GET request
-        if (this.token != null && this.clientToken != null) {
-            try {
-                //create a GET request with client-token as header
-                String queryToken = this.token;
-                URI uri = URI.create("https://scoringtest.credable.io/api/v1/scoring/queryScore/" + queryToken);
-                HttpHeaders headers = new HttpHeaders();
-                headers.set("client-token", this.clientToken);
-                HttpEntity<String> entity = new HttpEntity<>(headers);
-                ResponseEntity<QueryResponse> score = restTemplate.exchange(uri, HttpMethod.GET, entity,QueryResponse.class);
-                
-                //map response to expected respone
-                if (score != null) {
-                    QueryResponse queryResponse = null;
-                    ModelMapper modelMapper = new ModelMapper();
-                    queryResponse = modelMapper.map(score, QueryResponse.class);
-                    return queryResponse;
-                }else{
-                    LOGGER.warning("response was empty");
-                }
-            } catch (RestClientException e) {
-               LOGGER.log(Level.SEVERE, "error occurred", e);
+        try {
+            //create a GET request with client-token as header
+            ResponseEntity<String> queryToken = initiateQueryScore(customerNumber);
+            String token = queryToken.getBody();           
+            String clientToken = createClient(customerNumber);
+            URI uri = URI.create("https://scoringtest.credable.io/api/v1/scoring/queryScore/" + token);
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("client-token", clientToken);
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+            ResponseEntity<QueryResponse> score = restTemplate.exchange(uri, HttpMethod.GET, entity,QueryResponse.class);
+            //map response to expected response
+            if (score != null) {
+                ModelMapper modelMapper = new ModelMapper();
+                QueryResponse queryResponse = modelMapper.map(score.getBody(), QueryResponse.class);
+                return queryResponse;
+            }else{
+                LOGGER.warning("response was empty");
+                throw new RuntimeException("response was null");
             }
-        } else {
-            //otherwise trigger initiateQueryScore to generate tokenss
-            initiateQueryScore(customerNumber);            
-         }
-    throw new RuntimeException("Failed to retrieve data from server");
+        } catch (RestClientException e) {
+            LOGGER.warning(e.getMessage());
+            throw new RuntimeException("failed to send GET request");
+        }
    }
 }
