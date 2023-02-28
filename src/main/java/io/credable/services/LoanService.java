@@ -17,7 +17,7 @@ public class LoanService {
     public QueryResponse requestLoan (String customerNumber) {
         //trigger query score from scoringclient
         QueryResponse queryScore = client.queryScore(customerNumber);
-        //somehow the loan request needs to be persisted on the db
+        
         return queryScore;
     }
 }

@@ -13,10 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 // @Entity
 // @Table(name = "loan-request")
-public class Loan {
+public class Loan{
     //loan request model
     // @Id
-    private Long Id;
     private String customer_number;
     private Integer amount;
 }

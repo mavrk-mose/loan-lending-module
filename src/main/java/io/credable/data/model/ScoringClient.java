@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -65,7 +66,7 @@ public class ScoringClient {
             }  
         } catch (RestClientException e) {
             LOGGER.warning(e.getMessage());
-            throw new RuntimeException("failed to send POST request");
+            return "failed to send GET request";
         }         
     }
 
@@ -85,7 +86,7 @@ public class ScoringClient {
             return response;
         } catch (RestClientException e) {
             LOGGER.warning(e.getMessage());
-            throw new RuntimeException("failed to send GET request");
+            return new ResponseEntity<String>("failed to send GET request", HttpStatus.BAD_REQUEST);
         }   
     }
 
