@@ -2,22 +2,25 @@ package io.credable.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.credable.data.model.Loan;
 import io.credable.data.model.QueryResponse;
 import io.credable.data.model.ScoringClient;
+import io.credable.services.LoanService;
 
 @RestController
 public class LoanController {
 
     private final ScoringClient client;
-    
-    public LoanController(ScoringClient client) {
-        this.client = client;
-    }
 
-    record NewRequest(String customer_number, Integer amount) {
+    private final LoanService service;
+    
+    public LoanController(ScoringClient client, LoanService service) {
+        this.client = client;
+        this.service = service;
     }
 
     @GetMapping("request-loan/{customerNumber}")
@@ -26,9 +29,12 @@ public class LoanController {
         return score;
     }
     
-    @PostMapping("create-client/{customerNumber}")
-    public String createClient(@PathVariable String customerNumber) {
-        String token = client.createClient(customerNumber);
-        return token;
+    @PostMapping("create-client")
+    public QueryResponse createClient(@RequestBody Loan loanRequest) {
+        //invoke requestLoan method in loanService
+        String customerNumber = loanRequest.getCustomer_number();
+        QueryResponse queryResponse = service.requestLoan(customerNumber);
+         
+        return queryResponse;    
     }
 }

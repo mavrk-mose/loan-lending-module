@@ -1,47 +1,16 @@
 package io.credable.data.model;
 
-public class ClientRequest {
-    
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@Data
+@NoArgsConstructor
+public class ClientRequest { 
     //request payload
     private String url;
     private String name;
     private String username;
     private String password;
-    
-    //constructors
-    public ClientRequest(String url, 
-                        String name, 
-                        String username, 
-                        String password) {
-        this.url = url;
-        this.name = name;
-        this.username = username;
-        this.password = password;
-    }
-
-    //getters and setters
-    public String getUrl() {
-        return url;
-    }
-    public void setUrl(String url) {
-        this.url = url;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getUsername() {
-        return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

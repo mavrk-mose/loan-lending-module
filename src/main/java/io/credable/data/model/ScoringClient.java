@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -32,34 +31,15 @@ public class ScoringClient {
 
     private String clientToken;
 
-    private String token;
-
-    private String customerNumber;
-
-    //getters and setters
-    public String getClientToken() throws JsonProcessingException {
-        if (this.clientToken == null) {
-            createClient(customerNumber);
-        }
-        return this.clientToken;
-    }
-
-    public String getToken() throws JsonProcessingException {
-        if (this.token == null) {
-            initiateQueryScore(customerNumber);
-        }
-        return this.token;
-    }
-
     //POST request to generate client-token
     @SneakyThrows
-    public String createClient (String customerNumber){
+    private String createClient (String customerNumber){
         //request payload
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("url","http://mossestest.credable.io:9090/query/"+ customerNumber);
-        requestBody.put("name","transactions");
-        requestBody.put("username","admin");
-        requestBody.put("password","pwd123"); 
+        requestBody.put("name","");
+        requestBody.put("username","");
+        requestBody.put("password",""); 
 
         //serialized hashmap to string
         ObjectMapper mapper = new ObjectMapper();
@@ -93,7 +73,6 @@ public class ScoringClient {
     //initialize the query score
     @SneakyThrows
     private ResponseEntity<String> initiateQueryScore (String customerNumber) {
-        //if client-token is not null, use client-token as header
         try {
             //create a GET request with client-token as header
             String clientToken = createClient(customerNumber);
@@ -113,7 +92,6 @@ public class ScoringClient {
     //query the score
     @SneakyThrows
     public QueryResponse queryScore (String customerNumber) {
-        //if token & client-token are not null trigger GET request
         try {
             //create a GET request with client-token as header
             ResponseEntity<String> queryToken = initiateQueryScore(customerNumber);
@@ -132,11 +110,11 @@ public class ScoringClient {
                 return queryResponse;
             }else{
                 LOGGER.warning("response was empty");
-                throw new RuntimeException("response was null");
+                return new QueryResponse(null, customerNumber, null, null, "empty", "empty");
             }
         } catch (RestClientException e) {
             LOGGER.warning(e.getMessage());
-            throw new RuntimeException("failed to send GET request");
+            return new QueryResponse(null, customerNumber, null, null, "pending..", "pending..");
         }
    }
 }

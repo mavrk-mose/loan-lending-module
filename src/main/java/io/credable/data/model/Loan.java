@@ -1,36 +1,22 @@
 package io.credable.data.model;
 
-public class Loan {
+// import org.springframework.data.annotation.Id;
 
+// import jakarta.persistence.Entity;
+// import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@Data
+@NoArgsConstructor
+// @Entity
+// @Table(name = "loan-request")
+public class Loan {
     //loan request model
+    // @Id
+    private Long Id;
     private String customer_number;
     private Integer amount;
-
-    //constructors
-    public Loan(String customer_number, 
-                Integer amount) {
-        this.customer_number = customer_number;
-        this.amount = amount;
-    }
-
-    public Loan() {
-    }
-
-    //getters and setters
-    public String getCustomerNumber() {
-        return customer_number;
-    }
-
-    public void setCustomerNumber(String customer_number) {
-        this.customer_number = customer_number;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
-
 }
