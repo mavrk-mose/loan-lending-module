@@ -32,6 +32,11 @@ public class ScoringClient {
 
     private String clientToken;
 
+    @SneakyThrows
+    private static void delay(int seconds) {
+        Thread.sleep(seconds * 1000);
+    }
+
     //POST request to generate client-token
     @SneakyThrows
     private String createClient (String customerNumber){
@@ -42,7 +47,7 @@ public class ScoringClient {
         requestBody.put("username","");
         requestBody.put("password",""); 
 
-        //serialized hashmap to string
+        //serialize hashmap to string
         ObjectMapper mapper = new ObjectMapper();
         String request = mapper.writeValueAsString(requestBody);
         try {
@@ -70,7 +75,6 @@ public class ScoringClient {
         }         
     }
 
-
     //initialize the query score
     @SneakyThrows
     private ResponseEntity<String> initiateQueryScore (String customerNumber) {
@@ -94,7 +98,6 @@ public class ScoringClient {
     @SneakyThrows
     public QueryResponse queryScore (String customerNumber) {
         try {
-            //create a GET request with client-token as header
             ResponseEntity<String> queryToken = initiateQueryScore(customerNumber);
             String token = queryToken.getBody();           
             String clientToken = createClient(customerNumber);
@@ -103,6 +106,7 @@ public class ScoringClient {
             headers.set("client-token", clientToken);
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> entity = new HttpEntity<>(headers);
+            delay(15);
             ResponseEntity<QueryResponse> score = restTemplate.exchange(uri, HttpMethod.GET, entity,QueryResponse.class);
             //map response to expected response
             if (score != null) {
