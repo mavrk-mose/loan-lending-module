@@ -106,8 +106,10 @@ public class ScoringClient {
             headers.set("client-token", clientToken);
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> entity = new HttpEntity<>(headers);
-            delay(15);
-            ResponseEntity<QueryResponse> score = restTemplate.exchange(uri, HttpMethod.GET, entity,QueryResponse.class);
+            do{
+                delay(15);
+                ResponseEntity<QueryResponse> score = restTemplate.exchange(uri, HttpMethod.GET, entity,QueryResponse.class);
+            } while (score != null);
             //map response to expected response
             if (score != null) {
                 ModelMapper modelMapper = new ModelMapper();
