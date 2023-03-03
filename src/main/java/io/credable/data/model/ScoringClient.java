@@ -114,6 +114,7 @@ public class ScoringClient {
                 delay(15); 
                 ResponseEntity<QueryResponse> score = restTemplate.exchange(uri, HttpMethod.GET, entity,QueryResponse.class);
                 response = score.getBody();
+                retry++;
             }
             //map response to expected response
             if (response != null) {

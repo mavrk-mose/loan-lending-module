@@ -16,7 +16,7 @@ public class LoanService {
     }
     
     @SneakyThrows
-    public QueryResponse requestLoan (String customerNumber, Double amount) {
+    public QueryResponse requestLoan (String customerNumber/* , Double amount */) {
         //trigger query score from scoringclient
         QueryResponse queryScore = client.queryScore(customerNumber);
         return queryScore;
