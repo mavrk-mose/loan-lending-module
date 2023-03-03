@@ -103,20 +103,13 @@ public class ScoringClient {
             HttpEntity<String> entity = new HttpEntity<>(headers);
 
             //wait and retry
-            int maxRetries = 2;
-            int retry = 0;
-            QueryResponse response = new QueryResponse();
-            while ( response == null && retry < maxRetries){
-                Thread.sleep(15000); 
-                ResponseEntity<QueryResponse> score = restTemplate.exchange(uri, HttpMethod.GET, entity,QueryResponse.class);
-                response = score.getBody();
-                retry++;
-            }
+            Thread.sleep(15000); 
+            ResponseEntity<QueryResponse> score = restTemplate.exchange(uri, HttpMethod.GET, entity,QueryResponse.class);
 
             //map response to expected response
-            if (response!= null) {
+            if (score!= null) {
                 ModelMapper modelMapper = new ModelMapper();
-                QueryResponse queryResponse = modelMapper.map(response, QueryResponse.class);
+                QueryResponse queryResponse = modelMapper.map(score.getBody(), QueryResponse.class);
                 return queryResponse;
             }else{
                 LOGGER.warning("response was empty");
