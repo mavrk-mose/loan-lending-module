@@ -15,8 +15,8 @@ public class SubscribeController {
     
     //SOAP request is invoked when number is submitted inside Post mapping 
     @GetMapping("subscribe/{customer_number}")
-    public ResponseEntity<?> getCustomer (@PathVariable String customerNumber) {
-        ResponseEntity<?> response = service.fetchData(customerNumber);
+    public ResponseEntity<Object> getCustomer (@PathVariable String customerNumber) {
+        ResponseEntity<Object> response = service.fetchData(customerNumber);
         return response;
     } 
 }     
