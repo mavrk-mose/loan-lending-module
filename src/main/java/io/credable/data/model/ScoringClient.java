@@ -106,14 +106,19 @@ public class ScoringClient {
             headers.set("client-token", clientToken);
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> entity = new HttpEntity<>(headers);
-            do{
-                delay(15);
+            //wait and retry
+            int maxRetries = 5;
+            int retry = 0;
+            QueryResponse response = null;
+            while (response == null && retry < maxRetries) {
+                delay(15); 
                 ResponseEntity<QueryResponse> score = restTemplate.exchange(uri, HttpMethod.GET, entity,QueryResponse.class);
-            } while (score != null);
+                response = score.getBody();
+            }
             //map response to expected response
-            if (score != null) {
+            if (response != null) {
                 ModelMapper modelMapper = new ModelMapper();
-                QueryResponse queryResponse = modelMapper.map(score.getBody(), QueryResponse.class);
+                QueryResponse queryResponse = modelMapper.map(response, QueryResponse.class);
                 return queryResponse;
             }else{
                 LOGGER.warning("response was empty");
