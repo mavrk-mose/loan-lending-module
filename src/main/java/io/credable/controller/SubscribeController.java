@@ -25,9 +25,9 @@ import jakarta.xml.ws.soap.SOAPFaultException;
 @RestController
 public class SubscribeController {  
     
+    //initialized
     @Autowired
     private CustomerDAO customerDAO;
-    //initialized
     private final CustomerService service;
 
     public SubscribeController(CustomerService service) {

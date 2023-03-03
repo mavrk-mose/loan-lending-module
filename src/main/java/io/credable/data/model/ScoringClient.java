@@ -37,7 +37,7 @@ public class ScoringClient {
     private String createClient (String customerNumber){
         //request payload
         Map<String, String> requestBody = new HashMap<>();
-        requestBody.put("url","http://mossestest.credable.io:9090/query/"+ customerNumber);
+        requestBody.put("url","http://devotest.credable.io:443/query"+ customerNumber);
         requestBody.put("name","");
         requestBody.put("username","");
         requestBody.put("password",""); 
@@ -103,13 +103,20 @@ public class ScoringClient {
             HttpEntity<String> entity = new HttpEntity<>(headers);
 
             //wait and retry
-            Thread.sleep(15000); 
-            ResponseEntity<QueryResponse> score = restTemplate.exchange(uri, HttpMethod.GET, entity,QueryResponse.class);
+            int maxRetries = 5;
+            int retry = 0;
+            QueryResponse response = null;
+            while ( response == null && retry < maxRetries){
+                Thread.sleep(15000); 
+                ResponseEntity<QueryResponse> score = restTemplate.exchange(uri, HttpMethod.GET, entity,QueryResponse.class);
+                response = score.getBody();
+                retry++;
+            }
 
             //map response to expected response
-            if (score!= null) {
+            if (response!= null) {
                 ModelMapper modelMapper = new ModelMapper();
-                QueryResponse queryResponse = modelMapper.map(score.getBody(), QueryResponse.class);
+                QueryResponse queryResponse = modelMapper.map(response, QueryResponse.class);
                 return queryResponse;
             }else{
                 LOGGER.warning("response was empty");
