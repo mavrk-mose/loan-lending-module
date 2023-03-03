@@ -32,11 +32,6 @@ public class ScoringClient {
 
     private String clientToken;
 
-    @SneakyThrows
-    private static void delay(int seconds) {
-        Thread.sleep(seconds * 1000);
-    }
-
     //POST request to generate client-token
     @SneakyThrows
     private String createClient (String customerNumber){
@@ -106,18 +101,20 @@ public class ScoringClient {
             headers.set("client-token", clientToken);
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> entity = new HttpEntity<>(headers);
+
             //wait and retry
-            int maxRetries = 5;
+            int maxRetries = 2;
             int retry = 0;
-            QueryResponse response = null;
-            while (response == null && retry < maxRetries) {
-                delay(20); 
+            QueryResponse response = new QueryResponse();
+            while ( response == null && retry < maxRetries){
+                Thread.sleep(15000); 
                 ResponseEntity<QueryResponse> score = restTemplate.exchange(uri, HttpMethod.GET, entity,QueryResponse.class);
                 response = score.getBody();
                 retry++;
             }
+
             //map response to expected response
-            if (response != null) {
+            if (response!= null) {
                 ModelMapper modelMapper = new ModelMapper();
                 QueryResponse queryResponse = modelMapper.map(response, QueryResponse.class);
                 return queryResponse;
