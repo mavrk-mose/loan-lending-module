@@ -111,7 +111,7 @@ public class ScoringClient {
             int retry = 0;
             QueryResponse response = null;
             while (response == null && retry < maxRetries) {
-                delay(15); 
+                delay(20); 
                 ResponseEntity<QueryResponse> score = restTemplate.exchange(uri, HttpMethod.GET, entity,QueryResponse.class);
                 response = score.getBody();
                 retry++;
