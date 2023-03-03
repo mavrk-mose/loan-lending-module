@@ -7,9 +7,9 @@ import io.credable.data.external.customer.CustomerResponse;
 
 public class CustomerClient extends WebServiceGatewaySupport {
 
-    public CustomerResponse getCustomer(String customer_number){
+    public CustomerResponse getCustomer(String customerNumber){
         CustomerRequest request = new CustomerRequest();
-        request.setCustomerNumber(customer_number);
+        request.setCustomerNumber(customerNumber);
 
         CustomerResponse response = (CustomerResponse) getWebServiceTemplate()
             .marshalSendAndReceive("https://kycapitest.credable.io/service/customer", request);
