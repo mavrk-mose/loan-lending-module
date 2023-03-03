@@ -19,12 +19,15 @@ public class LoanService {
     
     public ScoringClient client;
     
-    public LoanService(ScoringClient client) {
+    public LoanService(ScoringClient client, 
+                       CustomerDAO customerDAO) {
         this.client = client;
+        this.customerDAO = customerDAO;
     }
     
+    //send loan request
     @SneakyThrows
-    public QueryResponse requestLoan (String customerNumber/* , Double amount */) {
+    public QueryResponse requestLoan (String customerNumber) {
         Optional<CustomerModel> customerOpt = customerDAO.findByCustomerNumber(customerNumber);
         //if customer is in database allow them to request loan
         if (customerOpt.isPresent()) {
@@ -34,4 +37,11 @@ public class LoanService {
             return new QueryResponse(null, customerNumber, null, null, "customer not subscribed", "customer not subscribed");
         }
     }
+
+    //book successful loans
+    public void storeLoan () {
+    
+        
+    }
+    
 }

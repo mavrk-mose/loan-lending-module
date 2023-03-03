@@ -107,11 +107,12 @@ public class ScoringClient {
             int retry = 0;
             QueryResponse response = null;
             while(response == null && retry < maxRetries){
-                Thread.sleep(15000); 
+                Thread.sleep(15000); //milliseconds
                 ResponseEntity<QueryResponse> score = restTemplate.exchange(uri, HttpMethod.GET, entity,QueryResponse.class);
                 response = score.getBody();
                 retry++;
             }
+            
             //map response to expected response
             if (response!= null) {
                 ModelMapper modelMapper = new ModelMapper();
