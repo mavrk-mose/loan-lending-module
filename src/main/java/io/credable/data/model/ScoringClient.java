@@ -37,7 +37,7 @@ public class ScoringClient {
     private String createClient (String customerNumber){
         //request payload
         Map<String, String> requestBody = new HashMap<>();
-        requestBody.put("url","54.91.182.42:9090/query/"+ customerNumber);
+        requestBody.put("url","http://devotest.credable.io:9090/query/"+ customerNumber);
         requestBody.put("name","");
         requestBody.put("username","");
         requestBody.put("password",""); 
@@ -76,7 +76,9 @@ public class ScoringClient {
         try {
             //create a GET request with client-token as header
             String clientToken = createClient(customerNumber);
-            URI uri = URI.create("https://scoringtest.credable.io/api/v1/scoring/initiateQueryScore/" + customerNumber);
+            String baseUri = "https://scoringtest.credable.io/api/v1/scoring/";
+            String url = "initiateQueryScore/" + customerNumber;
+            URI uri = URI.create(baseUri).resolve(url);
             HttpHeaders headers = new HttpHeaders();
             headers.set("client-token", clientToken);
             headers.setContentType(MediaType.APPLICATION_JSON); 
