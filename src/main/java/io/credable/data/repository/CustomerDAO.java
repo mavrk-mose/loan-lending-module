@@ -8,6 +8,5 @@ import io.credable.data.model.CustomerModel;
 
 public interface CustomerDAO extends JpaRepository<CustomerModel, Integer> {
 
-    Optional<CustomerModel> findByCustomerNumber(String customer_number);
-    
+    Optional<CustomerModel> findByCustomerNumber(String customerNumber);
 }

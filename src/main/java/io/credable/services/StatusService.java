@@ -4,6 +4,7 @@ public class StatusService {
 
     //check status of loan request 
     public String checkStatus () {
+       
        return null;
     }
     //create an if-elseif-if statement for >, == and < situations
