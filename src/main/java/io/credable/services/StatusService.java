@@ -25,13 +25,21 @@ public class StatusService {
 
     public String checkLoanStatus (String customerNumber) {
         Optional<Loan> loanOpt = loanDAO.findByCustomerNumber(customerNumber);
-        Double getLimitAmount = queryResponseDAO.findLimitAmountByCustomerNumber(customerNumber).getLimitAmount();
-        Double getAmount = loanDAO.findAmountByCustomerNumber(customerNumber).getAmount();
+        QueryResponse queryResponse = queryResponseDAO.findLimitAmountByCustomerNumber(customerNumber);
+        Double limitAmount = 0.0;
+        if(queryResponse != null){
+            limitAmount = queryResponse.getLimitAmount();
+        }
+        Loan loan = loanDAO.findAmountByCustomerNumber(customerNumber);  
+        Double amount = 0.0;
+        if(loan != null){
+            amount = loan.getAmount();
+        }      
         String loanStatus;
 
         //if there is a loan associated with the customerNumber
-       if (loanOpt.isPresent() && getAmount != null && getLimitAmount != null) {
-            if (getLimitAmount >= getAmount) {
+       if (loanOpt.isPresent() && amount != null && limitAmount != null) {
+            if (limitAmount >= amount) {
                 //TODO: find a way to book successful loans for auditors
                 loanStatus = String.valueOf(Status.SUCCESSFUL);
                 return loanStatus;
@@ -39,7 +47,7 @@ public class StatusService {
                 //TODO: I'll have to create a pending status 
                 loanStatus = String.valueOf(Status.REJECTED);
                 return loanStatus;
-            }
+            // }
        } else {
          return "customer did not request loan";
        }
