@@ -29,12 +29,16 @@ public class StatusService {
         Double limitAmount = 0.0;
         if(queryResponse != null){
             limitAmount = queryResponse.getLimitAmount();
+        } else {
+            return "limitAmount is null";
         }
         Loan loan = loanDAO.findAmountByCustomerNumber(customerNumber);  
         Double amount = 0.0;
         if(loan != null){
             amount = loan.getAmount();
-        }      
+        } else {
+            return "amount is null";
+        }
         String loanStatus;
 
         //if there is a loan associated with the customerNumber
