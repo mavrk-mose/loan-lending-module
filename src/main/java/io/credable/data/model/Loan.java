@@ -29,5 +29,5 @@ public class Loan{
         ) 
     private Long Id;
     private String customerNumber;
-    private Integer amount;
+    private Double amount;
 }
