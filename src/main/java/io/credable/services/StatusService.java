@@ -25,20 +25,8 @@ public class StatusService {
 
     public String checkLoanStatus (String customerNumber) {
         Optional<Loan> loanOpt = loanDAO.findByCustomerNumber(customerNumber);
-        QueryResponse queryResponse = queryResponseDAO.findLimitAmountByCustomerNumber(customerNumber);
-        Double limitAmount = 0.0;
-        if(queryResponse != null){
-            limitAmount = queryResponse.getLimitAmount();
-        } else {
-            return "limitAmount is null";
-        }
-        Loan loan = loanDAO.findAmountByCustomerNumber(customerNumber);  
-        Double amount = 0.0;
-        if(loan != null){
-            amount = loan.getAmount();
-        } else {
-            return "amount is null";
-        }
+        Double limitAmount = queryResponseDAO.findLimitAmountByCustomerNumber(customerNumber).getLimitAmount();
+        Double amount = loanDAO.findAmountByCustomerNumber(customerNumber).getAmount();
         String loanStatus;
 
         //if there is a loan associated with the customerNumber
@@ -51,8 +39,8 @@ public class StatusService {
                 //TODO: I'll have to create a pending status 
                 loanStatus = String.valueOf(Status.REJECTED);
                 return loanStatus;
-            // }
-       } else {
+            }
+        } else {
          return "customer did not request loan";
        }
     }
