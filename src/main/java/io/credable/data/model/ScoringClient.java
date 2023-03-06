@@ -20,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.credable.data.repository.QueryResponseDAO;
 import lombok.SneakyThrows;
 
 @Component
@@ -27,6 +28,12 @@ public class ScoringClient {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    private final QueryResponseDAO queryResponseDAO;
+
+    public ScoringClient(QueryResponseDAO queryResponseDAO) {
+        this.queryResponseDAO = queryResponseDAO;
+    }
 
     private static final Logger LOGGER = Logger.getLogger(ScoringClient.class.getName());
 
@@ -37,7 +44,7 @@ public class ScoringClient {
     private String createClient (String customerNumber){
         //request payload
         Map<String, String> requestBody = new HashMap<>();
-        requestBody.put("url","http://devotest.credable.io:9090/query/"+ customerNumber);
+        requestBody.put("url","http://54.91.182.42:9090/query/"+ customerNumber);
         requestBody.put("name","");
         requestBody.put("username","");
         requestBody.put("password",""); 
@@ -119,7 +126,7 @@ public class ScoringClient {
             if (response!= null) {
                 ModelMapper modelMapper = new ModelMapper();
                 QueryResponse queryResponse = modelMapper.map(response, QueryResponse.class);
-                return queryResponse;
+                return queryResponseDAO.save(queryResponse);
             }else{
                 LOGGER.warning("response was empty");
                 return new QueryResponse(null, customerNumber, null, null, "empty", "empty");

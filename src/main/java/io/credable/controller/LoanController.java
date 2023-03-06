@@ -1,19 +1,20 @@
 package io.credable.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.credable.data.model.Loan;
-//import io.credable.data.model.Loan;
 import io.credable.data.model.QueryResponse;
 import io.credable.services.LoanService;
 
 @RestController
 public class LoanController {
 
+    @Autowired
     private final LoanService service;
-    
+
     public LoanController(LoanService service) {
         this.service = service;
     }
@@ -24,5 +25,4 @@ public class LoanController {
         QueryResponse queryResponse = service.requestLoan(customerNumber);
         return queryResponse;    
     }
-
 }
