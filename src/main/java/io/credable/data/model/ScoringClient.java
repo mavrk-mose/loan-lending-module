@@ -44,7 +44,7 @@ public class ScoringClient {
     private String createClient (String customerNumber){
         //request payload
         Map<String, String> requestBody = new HashMap<>();
-        requestBody.put("url","http://54.91.182.42:9090/query/"+ customerNumber);
+        requestBody.put("url","http://13.230.214.147:443/query/"+ customerNumber);
         requestBody.put("name","");
         requestBody.put("username","");
         requestBody.put("password",""); 

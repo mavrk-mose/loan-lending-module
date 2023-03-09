@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.credable.data.model.Loan;
+import io.credable.data.model.QueryResponse;
 import io.credable.data.model.Status;
 import io.credable.data.repository.LoanDAO;
 import io.credable.data.repository.QueryResponseDAO;
@@ -25,8 +26,18 @@ public class StatusService {
 
     public String checkLoanStatus (String customerNumber) {
         Optional<Loan> loanOpt = loanDAO.findByCustomerNumber(customerNumber);
-        Double limitAmount = queryResponseDAO.findLimitAmountByCustomerNumber(customerNumber).getLimitAmount();
-        Double amount = loanDAO.findAmountByCustomerNumber(customerNumber).getAmount();
+        //grabbing value of limitAmount
+        QueryResponse queryResponse = queryResponseDAO.findLimitAmountByCustomerNumber(customerNumber);
+        Double limitAmount = 0.0;
+        if (queryResponse != null) {
+            limitAmount = queryResponse.getLimitAmount();
+        }
+        //grabbing value of requested amount
+        Loan loan = loanDAO.findAmountByCustomerNumber(customerNumber);
+        Double amount = 0.0;
+        if (loan != null) {
+            amount = loan.getAmount();
+        }
         String loanStatus;
 
         //if there is a loan associated with the customerNumber
