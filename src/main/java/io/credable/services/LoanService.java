@@ -9,6 +9,7 @@ import io.credable.data.model.CustomerModel;
 import io.credable.data.model.QueryResponse;
 import io.credable.data.model.ScoringClient;
 import io.credable.data.repository.CustomerDAO;
+import io.micrometer.core.annotation.Timed;
 import lombok.SneakyThrows;
 
 @Service
@@ -17,7 +18,7 @@ public class LoanService {
     @Autowired
     private CustomerDAO customerDAO;
     
-    public ScoringClient client;
+    private ScoringClient client;
     
     public LoanService(ScoringClient client, 
                        CustomerDAO customerDAO) {
@@ -27,6 +28,7 @@ public class LoanService {
     
     //send loan request
     @SneakyThrows
+    @Timed(description = "Time spent to requesting loan", histogram = true)
     public QueryResponse requestLoan (String customerNumber) {
         Optional<CustomerModel> customerOpt = customerDAO.findByCustomerNumber(customerNumber);
         //if customer is in database allow them to request loan
@@ -37,9 +39,8 @@ public class LoanService {
         }
     }
 
-    //book successful loans
     public void storeLoan () {
-      // TODO document why this method is empty
+      // TODO find a way to book successful loans
     }
     
 }

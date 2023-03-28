@@ -15,6 +15,7 @@ import io.credable.config.CustomerConfig;
 import io.credable.data.external.customer.CustomerResponse;
 import io.credable.data.model.CustomerModel;
 import io.credable.data.repository.CustomerDAO;
+import io.micrometer.core.annotation.Timed;
 
 @Service
 public class SubscribeService {
@@ -29,9 +30,10 @@ public class SubscribeService {
         this.service = service;
     }
 
+    @Timed(description = "Time spent to fetching customer data", histogram = true)
     public ResponseEntity<Object> fetchData (String customerNumber){
-        Optional<CustomerModel> customerOpt = customerDAO.findByCustomerNumber(customerNumber);
 
+        Optional<CustomerModel> customerOpt = customerDAO.findByCustomerNumber(customerNumber);
         //if customer is in database print already subscribed
         if (customerOpt.isPresent()) {
             return new ResponseEntity<>(Map.of(MESSAGE, "Already subscribed",

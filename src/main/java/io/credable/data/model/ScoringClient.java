@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.credable.data.repository.QueryResponseDAO;
+import io.micrometer.core.annotation.Timed;
 import lombok.SneakyThrows;
 
 @Component
@@ -90,8 +91,7 @@ public class ScoringClient {
             headers.set("client-token", clientToken);
             headers.setContentType(MediaType.APPLICATION_JSON); 
             HttpEntity<String> entity = new HttpEntity<>(headers);
-            ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
-            return response;
+            return restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
         } catch (RestClientException e) {
             LOGGER.warning(e.getMessage());
             return new ResponseEntity<String>("failed to send GET request", HttpStatus.BAD_REQUEST);
@@ -100,6 +100,7 @@ public class ScoringClient {
 
     //query the score
     @SneakyThrows
+    @Timed(description = "Time spent to querying score", histogram = true)
     public QueryResponse queryScore (String customerNumber) {
         try {
             ResponseEntity<String> queryToken = initiateQueryScore(customerNumber);
