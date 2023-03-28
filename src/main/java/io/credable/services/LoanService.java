@@ -31,8 +31,7 @@ public class LoanService {
         Optional<CustomerModel> customerOpt = customerDAO.findByCustomerNumber(customerNumber);
         //if customer is in database allow them to request loan
         if (customerOpt.isPresent()) {
-            QueryResponse queryScore = client.queryScore(customerNumber);
-            return queryScore;
+            return client.queryScore(customerNumber);
         } else {
             return new QueryResponse(null, customerNumber, null, null, "customer not subscribed", "customer not subscribed");
         }
@@ -40,8 +39,7 @@ public class LoanService {
 
     //book successful loans
     public void storeLoan () {
-    
-        
+      // TODO document why this method is empty
     }
     
 }

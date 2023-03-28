@@ -19,8 +19,7 @@ public class StatusController {
 
     @GetMapping("/check-status/{customerNumber}")
     public String getLoanStatus (@PathVariable String customerNumber) {
-        String getStatus = service.checkLoanStatus(customerNumber);
-        return getStatus;
+        return service.checkLoanStatus(customerNumber);
     }
 
 

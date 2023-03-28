@@ -11,9 +11,7 @@ public class CustomerClient extends WebServiceGatewaySupport {
         CustomerRequest request = new CustomerRequest();
         request.setCustomerNumber(customerNumber);
 
-        CustomerResponse response = (CustomerResponse) getWebServiceTemplate()
-            .marshalSendAndReceive("https://kycapitest.credable.io/service/customer", request);
-
-        return response;    
+        return (CustomerResponse) getWebServiceTemplate()
+            .marshalSendAndReceive("https://kycapitest.credable.io/service/customer", request);    
     }
 }

@@ -24,6 +24,7 @@ public class SubscribeService {
     
     private final CustomerService service;
 
+    private static final String MESSAGE = "Message";
     public SubscribeService(CustomerService service) {
         this.service = service;
     }
@@ -33,7 +34,7 @@ public class SubscribeService {
 
         //if customer is in database print already subscribed
         if (customerOpt.isPresent()) {
-            return new ResponseEntity<>(Map.of("Message", "Already subscribed",
+            return new ResponseEntity<>(Map.of(MESSAGE, "Already subscribed",
                                                 "Customer Data", customerDAO.findByCustomerNumber(customerNumber)), HttpStatus.OK);
         } else {
             //if customer is not in database fetch data
@@ -46,11 +47,11 @@ public class SubscribeService {
                 if (response != null && response.getCustomer() != null) {
                     CustomerModel newCustomer = service.storeCustomer(response);
                     return 
-                        new ResponseEntity<>(Map.of("Message", "Successfully subscribed", 
+                        new ResponseEntity<>(Map.of(MESSAGE, "Successfully subscribed", 
                                                     "response", newCustomer), HttpStatus.OK);
                 } else {
                     return 
-                        new ResponseEntity<>(Map.of("Message", "Customer doesn't exist"), HttpStatus.NOT_FOUND);
+                        new ResponseEntity<>(Map.of(MESSAGE, "Customer doesn't exist"), HttpStatus.NOT_FOUND);
                 }
             } catch (SOAPFaultException e) {
                 //handle exception
