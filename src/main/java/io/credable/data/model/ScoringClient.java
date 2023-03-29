@@ -7,13 +7,13 @@ import java.util.logging.Logger;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,7 +24,7 @@ import io.credable.data.repository.QueryResponseDAO;
 import io.micrometer.core.annotation.Timed;
 import lombok.SneakyThrows;
 
-@Component
+@Configuration
 public class ScoringClient {
 
     @Autowired
@@ -39,14 +39,13 @@ public class ScoringClient {
 
     private static final Logger LOGGER = Logger.getLogger(ScoringClient.class.getName());
 
-    private String clientToken;
-
     //POST request to generate client-token
     @SneakyThrows
     private String createClient (String customerNumber){
+        String clientToken;
         //request payload
         Map<String, String> requestBody = new HashMap<>();
-        requestBody.put("url","http://13.230.214.147:443/query/"+ customerNumber);
+        requestBody.put("url","http://43.206.154.150:443/query/"+ customerNumber);
         requestBody.put("name","");
         requestBody.put("username","");
         requestBody.put("password",""); 
@@ -67,8 +66,8 @@ public class ScoringClient {
                 String responseJson = objectMapper.writeValueAsString(responseEntity.getBody());
                 Map<String, String> responseMap = objectMapper.readValue(responseJson, new TypeReference<Map<String, String>>() {});
                 String token = (String) responseMap.get("token");
-                this.clientToken = token; //makes the client-token as a global variable
-                return this.clientToken;
+                clientToken = token; //makes the client-token as a global variable
+                return clientToken;
             } else {
                 LOGGER.warning("The response is empty");
                 return "response failed to generate";
