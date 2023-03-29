@@ -21,8 +21,8 @@ public class CustomerService {
     }
 
     //gets the customer number from the database
-    public Optional<CustomerModel> grabCustomer(String customer_number) {
-        return customerDAO.findByCustomerNumber(customer_number);
+    public Optional<CustomerModel> grabCustomer(String customerNumber) {
+        return customerDAO.findByCustomerNumber(customerNumber);
     }
 
     //map response to entity, then stores it to repo

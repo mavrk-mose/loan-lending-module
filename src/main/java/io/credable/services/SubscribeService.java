@@ -23,6 +23,7 @@ public class SubscribeService {
     @Autowired
     private CustomerDAO customerDAO;
     
+    @Autowired
     private final CustomerService service;
 
     private static final String MESSAGE = "Message";
@@ -37,7 +38,7 @@ public class SubscribeService {
         //if customer is in database print already subscribed
         if (customerOpt.isPresent()) {
             return new ResponseEntity<>(Map.of(MESSAGE, "Already subscribed",
-                                                "Customer Data", customerDAO.findByCustomerNumber(customerNumber)), HttpStatus.OK);
+                                              "Customer Data", customerDAO.findByCustomerNumber(customerNumber)), HttpStatus.OK);
         } else {
             //if customer is not in database fetch data
             try {
