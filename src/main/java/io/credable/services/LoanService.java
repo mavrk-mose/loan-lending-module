@@ -18,6 +18,7 @@ public class LoanService {
     @Autowired
     private CustomerDAO customerDAO;
     
+    @Autowired
     private ScoringClient client;
     
     public LoanService(ScoringClient client, 

@@ -30,6 +30,7 @@ public class ScoringClient {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
     private final QueryResponseDAO queryResponseDAO;
 
     public ScoringClient(QueryResponseDAO queryResponseDAO) {
