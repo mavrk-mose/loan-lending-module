@@ -1,34 +1,30 @@
 package io.credable.services;
 
-import java.util.Map;
-import java.util.Optional;
-
-import javax.xml.ws.soap.SOAPFaultException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-
 import io.credable.config.CustomerConfig;
 import io.credable.data.external.customer.CustomerResponse;
 import io.credable.data.model.CustomerModel;
 import io.credable.data.repository.CustomerDAO;
 import io.micrometer.core.annotation.Timed;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import javax.xml.ws.soap.SOAPFaultException;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class SubscribeService {
     //initialized
-    @Autowired
-    private CustomerDAO customerDAO;
+    private final CustomerDAO customerDAO;
     
-    @Autowired
     private final CustomerService service;
 
     private static final String MESSAGE = "Message";
-    public SubscribeService(CustomerService service) {
+    public SubscribeService(CustomerService service, CustomerDAO customerDAO) {
         this.service = service;
+        this.customerDAO = customerDAO;
     }
 
     @Timed(description = "Time spent to fetching customer data", histogram = true)

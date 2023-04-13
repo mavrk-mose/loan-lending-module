@@ -45,7 +45,7 @@ public class ScoringClient {
         String clientToken;
         //request payload
         Map<String, String> requestBody = new HashMap<>();
-        requestBody.put("url","http://43.206.154.150:443/query/"+ customerNumber);
+        requestBody.put("url","http://ec2-54-249-170-143.ap-northeast-1.compute.amazonaws.com:443/query/"+ customerNumber);
         requestBody.put("name","");
         requestBody.put("username","");
         requestBody.put("password",""); 
