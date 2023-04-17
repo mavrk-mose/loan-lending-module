@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name="KYC")
+@Table(name="kyc")
 public class CustomerModel {
     //customer model
     @Id

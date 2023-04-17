@@ -9,3 +9,4 @@ export default function () {
   http.get('http://ec2-54-249-170-143.ap-northeast-1.compute.amazonaws.com:8080/subscribe/397178638');
   sleep(1);
 }
+  
