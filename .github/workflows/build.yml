@@ -9,17 +9,28 @@ on:
       - master
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
 
     steps:
-      - uses: actions/checkout@v3
-      - name: set up JDK 17
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build JAR
         uses: actions/setup-java@v3
         with:
           distribution: 'corretto' # See 'Supported distributions' for available options
           java-version: '17'
       - run: mvn clean package
+
+      - name: Deploy to AWS
+        uses: ShauryaAg/AWS-Deploy-action@v1
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: ${{ secrets.TARGET_DIR }}
+          SOURCE: target/main-0.0.1-SNAPSHOT.jar
