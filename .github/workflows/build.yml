@@ -22,7 +22,7 @@ jobs:
       - name: Build JAR
         uses: actions/setup-java@v3
         with:
-          distribution: 'corretto' # See 'Supported distributions' for available options
+          distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '17'
       - run: mvn clean package
 
