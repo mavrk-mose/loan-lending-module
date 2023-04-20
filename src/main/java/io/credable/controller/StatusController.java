@@ -22,5 +22,4 @@ public class StatusController {
         return service.checkLoanStatus(customerNumber);
     }
 
-
 }
