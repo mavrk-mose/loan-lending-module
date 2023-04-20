@@ -1,0 +1,22 @@
+
+name: Deploy JAR file to EC2 instance
+
+on:
+    push:
+        branches:
+            - master
+jobs:
+    deploy:
+        name: Deploy to EC2 on push to master
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Deploy to AWS
+              uses: ShauryaAg/AWS-Deploy-action@v1
+              env:
+                SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+                REMOTE_HOST: ${{ secrets.HOST_DNS }}
+                REMOTE_USER: ${{ secrets.USERNAME }}
+                TARGET: ${{ secrets.TARGET_DIR }}
+                SOURCE: target/main-0.0.1-SNAPSHOT.jar
+
