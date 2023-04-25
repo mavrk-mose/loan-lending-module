@@ -27,7 +27,7 @@ jobs:
       - run: mvn clean package
 
       - name: Deploy to AWS
-        uses: ShauryaAg/AWS-Deploy-action@v1
+        uses: easingthemes/ssh-deploy@v2.1.5
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
